@@ -48,7 +48,7 @@ def get_emails(n, con):
                 msgs.append(get_content(msg))
     return msgs
 
-# Connect to Gmail
+
 con = imaplib.IMAP4_SSL(imap_url)
 con.login(user, password)
 con.select('Inbox')
