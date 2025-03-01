@@ -14,7 +14,8 @@ This is the Queen's Guard. A new browser extension which uses Gemini AI to scan 
 - pip install python-dotenv
 - pip install Flask
 
-### 
+### Run the Python web server API
+$ flask --app python_server run
 
 
 # TO-DO
