@@ -22,8 +22,6 @@ def get_content(msg):
         for part in msg.walk():
             content_type = part.get_content_type()
             content_disposition = str(part.get("Content-Disposition"))
-
-            # Extract text content (ignore attachments)
             if "attachment" not in content_disposition and content_type in ["text/plain", "text/html"]:
                 payload = part.get_payload(decode=True)
                 return payload.decode("utf-8", errors="ignore")
