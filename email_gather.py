@@ -1,12 +1,20 @@
 import imaplib
 import email
 import quopri
-#from link_detctor  import check_url_status
 from gemini import is_email_content_malicious
+from setup_env import create_dotenv
+from dotenv import load_dotenv
+import os
+#from link_detctor  import check_url_status
 
-user = 'thequeensguard25@gmail.com'
-password = 'hwjs uvap zdqz xzfx'
-imap_url = 'imap.gmail.com'
+#Import the .env
+create_dotenv()
+load_dotenv()
+
+user = os.getenv('EMAIL_ADDRESS')
+password = os.getenv('USER_PWD')
+imap_url = os.getenv('IMAP_URL')
+virus_total = os.getenv('VIRUSTOTAL_API')
 
 def get_content(msg):
     if msg.is_multipart():
@@ -46,7 +54,7 @@ con = imaplib.IMAP4_SSL(imap_url)
 con.login(user, password)
 con.select('Inbox')
 
-msgs = get_emails(5, con)
+msgs = get_emails(1, con)
 
 for msg in msgs:
 

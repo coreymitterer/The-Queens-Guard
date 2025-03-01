@@ -43,6 +43,10 @@ def create_dotenv() -> None:
         pwd = input("Please input the app password of the email you with to protect: ")
         env.write(f'USER_PWD="{pwd}"\n')
 
+    if env_str.find("VIRUSTOTAL_API=") == -1:
+        total = input("Input your VirusTotal API key: ")
+        env.write(f'VIRUSTOTAL_API="{total}"\n')
+
     env.close()
     return None
 
