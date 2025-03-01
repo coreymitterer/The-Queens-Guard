@@ -2,7 +2,7 @@ import imaplib
 import email
 
 user = 'thequeensguard25@gmail.com'
-password = 'henhacks25'
+password = 'cgdq plxb roap mdeb'
 imap_url = 'imap.gmail.com'
 
 
@@ -12,6 +12,7 @@ def get_content(msg):
         return get_content(msg.get_payload(0))
     else:
         return msg.get_payload(None, True)
+        
 
 def search(key, value, con):
     result, data = con.search(None, key, "{}".format(value))
@@ -30,7 +31,7 @@ con.login(user, password)
 
 con.select('Inbox') 
 
-msgs = get_emails(search('FROM', 'wesclark@udel.edu', con))
+msgs = get_emails(search('FROM', 'coreymit@udel.edu', con))
 
 for msg in msgs[::-1]: 
     for sent in msg:
