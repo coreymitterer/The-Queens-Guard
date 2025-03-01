@@ -7,16 +7,6 @@ from dotenv import load_dotenv
 import os
 from link_detctor import check_url_status
 
-#Create and Import the .env
-create_dotenv()
-load_dotenv()
-
-#Get the Environment Variables from .env
-user = os.getenv('EMAIL_ADDRESS')
-password = os.getenv('USER_PWD')
-imap_url = os.getenv('IMAP_URL')
-virus_total = os.getenv('VIRUSTOTAL_API')
-
 def get_content(msg):
     if msg.is_multipart():
         for part in msg.walk():
@@ -49,24 +39,43 @@ def get_emails(n, con):
     return msgs
 
 
-con = imaplib.IMAP4_SSL(imap_url)
-con.login(user, password)
-con.select('Inbox')
+def emails_main(num: int):
+    #Create and Import the .env
+    create_dotenv()
+    load_dotenv()
 
-msgs = get_emails(1, con)
+    #Get the Environment Variables from .env
+    user = os.getenv('EMAIL_ADDRESS')
+    password = os.getenv('USER_PWD')
+    imap_url = os.getenv('IMAP_URL')
+    virus_total = os.getenv('VIRUSTOTAL_API')
 
-for msg in msgs:
-    #Pass the email body to gemini, returns a dict with:
-    #    is_email_malicious: bool
-    #    percent_certainty: int
-    #    is_there_a_link: bool
-    #    included_link: str
-    results = is_email_content_malicious(msg)
-    print(msg)
-    print()
+    con = imaplib.IMAP4_SSL(imap_url)
+    con.login(user, password)
+    con.select('Inbox')
 
-    #If is_there_a_link == true, then pass the link to link_detector
-    #if results["is_there_a_link"] == True:
-        #url_result = check_url_status(results["included_link"])
+    msgs = get_emails(num, con)
+    combined = "["
 
-    #TODO: Save results and url_results in some way
+    for msg in msgs:
+        #Pass the email body to gemini, returns a dict with:
+        #    is_email_malicious: bool
+        #    percent_certainty: int
+        #    is_there_a_link: bool
+        #    included_link: str
+        results = is_email_content_malicious(msg)
+
+        if combined == "[":
+            combined = combined + results
+        else:
+            combined = combined + ', ' + results
+
+        #If is_there_a_link == true, then pass the link to link_detector
+        #if results["is_there_a_link"] == True:
+            #url_result = check_url_status(results["included_link"])
+    combined = combined + ']'
+    
+    return combined
+
+#Testing
+#print(main(2))

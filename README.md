@@ -12,12 +12,11 @@ This is the Queen's Guard. A new browser extension which uses Gemini AI to scan 
 ### Dependencied
 - pip install -q -U google-genai
 - pip install python-dotenv
+- pip install Flask
 
 ### 
 
 
 # TO-DO
 
-- Prompt user for username and password
-- Prompt user for gemini api key
-- write user responses to a new .env file
+- 
