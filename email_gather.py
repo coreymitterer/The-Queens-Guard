@@ -5,6 +5,7 @@ from gemini import is_email_content_malicious
 from setup_env import create_dotenv
 from dotenv import load_dotenv
 import os
+import sys
 #from link_detctor  import check_url_status
 
 #Import the .env
@@ -47,7 +48,7 @@ def get_emails(n, con):
                 msgs.append(get_content(msg))
     return msgs
 
-# Connect to Gmail
+
 con = imaplib.IMAP4_SSL(imap_url)
 con.login(user, password)
 con.select('Inbox')
@@ -55,6 +56,4 @@ con.select('Inbox')
 msgs = get_emails(1, con)
 
 for msg in msgs:
-
     is_email_content_malicious(msg)
-    print(msg)
