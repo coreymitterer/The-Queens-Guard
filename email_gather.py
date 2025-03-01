@@ -7,10 +7,11 @@ from dotenv import load_dotenv
 import os
 #from link_detctor  import check_url_status
 
-#Import the .env
+#Create and Import the .env
 create_dotenv()
 load_dotenv()
 
+#Get the Environment Variables from .env
 user = os.getenv('EMAIL_ADDRESS')
 password = os.getenv('USER_PWD')
 imap_url = os.getenv('IMAP_URL')
