@@ -1,11 +1,49 @@
-<html>
-    <head>
-        <title>The Queens Guard</title>
-    </head>
-    <body>
-        <label for="count">How many Email would you like to check</label>
-        <input type="number" id="count" name="quantity" min="1" max="30">
-        <button id="Submit" value="Submit"> Submit</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Queens Guard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            width: 250px;
+            padding: 15px;
+            text-align: center;
+        }
 
-    </body>
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 80%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <label for="count">How many Emails would you like to check?</label>
+    <input type="number" id="count" name="quantity" min="1" max="30">
+    <button id="submit">Submit</button>
+
+    <script src="popup.js"></script>
+
+</body>
 </html>

@@ -1,6 +1,7 @@
 import imaplib
 import email
 import quopri
+from link_detctor  import check_url_status
 
 user = 'thequeensguard25@gmail.com'
 password = 'cgdq plxb roap mdeb'
@@ -44,10 +45,8 @@ con = imaplib.IMAP4_SSL(imap_url)
 con.login(user, password)
 con.select('Inbox')
 
-# Search emails from a specific sender
 msgs = get_emails(5, con)
 
-# Print cleaned email content
 for msg in msgs:
-    
+
     print(msg)
