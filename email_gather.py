@@ -66,7 +66,7 @@ for msg in msgs:
     print()
 
     #If is_there_a_link == true, then pass the link to link_detector
-    if results["is_there_a_link"] == True:
-        url_result = check_url_status(results["included_link"])
+    #if results["is_there_a_link"] == True:
+        #url_result = check_url_status(results["included_link"])
 
     #TODO: Save results and url_results in some way
