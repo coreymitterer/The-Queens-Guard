@@ -1,55 +1,53 @@
 import imaplib
 import email
+import quopri
 
 user = 'thequeensguard25@gmail.com'
 password = 'cgdq plxb roap mdeb'
 imap_url = 'imap.gmail.com'
 
-
-# Gets email content if there are replies it gets all parts 
 def get_content(msg):
     if msg.is_multipart():
-        return get_content(msg.get_payload(0))
+        for part in msg.walk():
+            content_type = part.get_content_type()
+            content_disposition = str(part.get("Content-Disposition"))
+
+            # Extract text content (ignore attachments)
+            if "attachment" not in content_disposition and content_type in ["text/plain", "text/html"]:
+                payload = part.get_payload(decode=True)
+                return payload.decode("utf-8", errors="ignore")
     else:
-        return msg.get_payload(None, True)
-        
+        return msg.get_payload(decode=True).decode("utf-8", errors="ignore")
 
 def search(key, value, con):
-    result, data = con.search(None, key, "{}".format(value))
+    result, data = con.search(None, key, f'"{value}"')
     return data
 
-def get_emails(result_bytes):
+def get_emails(n, con):
+    # Fetch all emails
+    result, data = con.search(None, 'ALL')
+    email_ids = data[0].split()
+    
+    # Get the last n emails
+    last_n_ids = email_ids[-n:]  # Fetch the last 'n' email IDs
     msgs = []
-    for num in result_bytes[0].split():
-        type, data = con.fetch(num, '(RFC822)')
-        msgs.append(data)
+    for email_id in last_n_ids:
+        typ, data = con.fetch(email_id, '(RFC822)')
+        for response_part in data:
+            if isinstance(response_part, tuple):
+                msg = email.message_from_bytes(response_part[1])
+                msgs.append(get_content(msg))
     return msgs
 
-con = imaplib.IMAP4_SSL(imap_url) 
+# Connect to Gmail
+con = imaplib.IMAP4_SSL(imap_url)
+con.login(user, password)
+con.select('Inbox')
 
-con.login(user, password) 
+# Search emails from a specific sender
+msgs = get_emails(5, con)
 
-con.select('Inbox') 
-
-msgs = get_emails(search('FROM', 'coreymit@udel.edu', con))
-
-for msg in msgs[::-1]: 
-    for sent in msg:
-        if type(sent) is tuple: 
- 
-            # encoding set as utf-8
-            content = str(sent[1], 'utf-8') 
-            data = str(content)
- 
-            # Handling errors related to unicodenecode
-            try: 
-                indexstart = data.find("ltr")
-                data2 = data[indexstart + 5: len(data)]
-                indexend = data2.find("</div>")
- 
-                # printing the required content which we need
-                # to extract from our email i.e our body
-                print(data2[0: indexend])
- 
-            except UnicodeEncodeError as e:
-                pass
+# Print cleaned email content
+for msg in msgs:
+    
+    print(msg)
