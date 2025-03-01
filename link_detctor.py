@@ -1,4 +1,5 @@
 import requests
+
 def check_url_status(check_url, API):
     url = "https://www.virustotal.com/api/v3/urls"
 
