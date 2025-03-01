@@ -15,6 +15,7 @@ def create_dotenv() -> None:
     #If .env does not exist, greate a .env
     if not env_exists():
         env = open(".env", "w")
+        env.write("IMAP_URL='imap.gmail.com'")
         env.close()
 
     #Once .env exists, ask for any relevant info
@@ -44,6 +45,14 @@ def create_dotenv() -> None:
         env.close()
         env = open(".env", "a")
         env.write(f'USER_PWD="{pwd}"\n')
+        env.close()
+        env = open(".env", "r")
+
+    #Check for Imap URL, add if not found
+    if env.read().find("IMAP_URL=") == -1:
+        env.close()
+        env = open(".env", "a")
+        env.write("IMAP_URL='imap.gmail.com'")
         env.close()
         env = open(".env", "r")
 
