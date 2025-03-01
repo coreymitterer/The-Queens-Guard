@@ -23,3 +23,5 @@ def is_email_content_malicious(email_content: str) -> dict:
         },
     )
     print(response.text)
+    print()
+    return(response.text)

@@ -5,13 +5,13 @@ from gemini import is_email_content_malicious
 from setup_env import create_dotenv
 from dotenv import load_dotenv
 import os
-import sys
-#from link_detctor  import check_url_status
+from link_detctor import check_url_status
 
-#Import the .env
+#Create and Import the .env
 create_dotenv()
 load_dotenv()
 
+#Get the Environment Variables from .env
 user = os.getenv('EMAIL_ADDRESS')
 password = os.getenv('USER_PWD')
 imap_url = os.getenv('IMAP_URL')
@@ -56,4 +56,15 @@ con.select('Inbox')
 msgs = get_emails(1, con)
 
 for msg in msgs:
-    is_email_content_malicious(msg)
+    #Pass the email body to gemini, returns a dict with:
+    #    is_email_malicious: bool
+    #    percent_certainty: int
+    #    is_there_a_link: bool
+    #    included_link: str
+    results = is_email_content_malicious(msg)
+    print(msg)
+    print()
+
+    #If is_there_a_link == true, then pass the link to link_detector
+    if results["is_there_a_link"] == True:
+        check_url_status(results["included_link"])
