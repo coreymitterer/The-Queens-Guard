@@ -1,7 +1,8 @@
 import imaplib
 import email
 import quopri
-from link_detctor  import check_url_status
+#from link_detctor  import check_url_status
+from gemini import is_email_content_malicious
 
 user = 'thequeensguard25@gmail.com'
 password = 'cgdq plxb roap mdeb'
@@ -49,4 +50,4 @@ msgs = get_emails(5, con)
 
 for msg in msgs:
 
-    print(msg)
+    is_email_content_malicious(msg)
