@@ -5,7 +5,7 @@ import quopri
 from gemini import is_email_content_malicious
 
 user = 'thequeensguard25@gmail.com'
-password = 'cgdq plxb roap mdeb'
+password = 'hwjs uvap zdqz xzfx'
 imap_url = 'imap.gmail.com'
 
 def get_content(msg):
@@ -51,3 +51,4 @@ msgs = get_emails(5, con)
 for msg in msgs:
 
     is_email_content_malicious(msg)
+    print(msg)
