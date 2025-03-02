@@ -6,6 +6,7 @@ from pydantic import BaseModel
 def is_email_content_malicious(email: dict) -> dict:
     email_subject = email["subject"]
     email_content = email["email_body"]
+    email_uid = email["email_uid"]
     
     load_dotenv()
     GEMINI_KEY = os.getenv('GEMINI_API_KEY')

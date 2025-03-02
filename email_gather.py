@@ -4,6 +4,7 @@ from setup_env import create_dotenv
 from dotenv import load_dotenv
 import os
 from link_detctor import check_url_status
+import json
 
 def emails_main(num: int):
     #Initialize .env
@@ -18,28 +19,29 @@ def emails_main(num: int):
     emails = []
     with MailBox('imap.gmail.com').login('thequeensguard25@gmail.com', 'hwjs uvap zdqz xzfx') as mailbox:
         for msg in mailbox.fetch(limit=num, reverse=True):
-            emails.append({"subject": msg.subject, "email_body": msg.text})
+            emails.append({"subject": msg.subject, "email_body": msg.text, "email_uid": msg.uid})
 
-    #Combine the results of phishing scan into single output string
-    combined = '['
+    #Combine the results of phishing scan into single output dictionary
+    combined = []
     for email in emails:
         #Pass the email body to gemini, returns a dict with:
-        #    subject_line: str
-        #    is_email_malicious: bool
-        #    percent_certainty: int
-        #    is_there_a_link: bool
-        #    included_link: str
-        results = is_email_content_malicious(email)
+        # 'subject_line': 'IRS - Taxes', 
+        # 'is_email_malicious': True, 
+        # 'percent_certainty': 95, 
+        # 'is_there_a_link': True, 
+        # 'included_link': 'https://grabify.org/27CB2'
 
-        if combined == "[":
-            combined = combined + results
-        else:
-            combined = combined + ', ' + results
+        #Make Gemini call
+        results = is_email_content_malicious(email)
+        jsond = json.loads(results)
+
+        combined.append(jsond)
+        
 
         #If is_there_a_link == true, then pass the link to link_detector
         #if results["is_there_a_link"] == True:
             #url_result = check_url_status(results["included_link"])
-    combined = combined + ']'
+        
 
     return combined
 
