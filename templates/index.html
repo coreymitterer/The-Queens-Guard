@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Phishing Detector</title>
+</head>
+<body>
+    <h2>Email Phishing Detector</h2>
+    <form method="POST">
+        <label for="num_emails">Enter the number of emails to check:</label>
+        <input type="number" name="num_emails" required>
+        <button type="submit">Submit</button>
+    </form>
+    {% if results %}
+        <h3>Results:</h3>
+        <p>{{ results }}</p>
+    {% endif %}
+</body>
+</html>
