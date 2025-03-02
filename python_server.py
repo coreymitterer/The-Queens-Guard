@@ -13,7 +13,8 @@ def index():
             results = emails_main(num_emails)  # Call phishing detection function
         except ValueError:
             results = "Invalid input. Please enter a valid number."
-    return render_template('index.html', results=results)
+    return render_template('index.html', results=json.loads(json.dumps(results)))  # Ensure proper data handling
+
 
 if __name__ == '__main__':
     app.run(debug=True)

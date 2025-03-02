@@ -30,20 +30,14 @@ def emails_main(num: int):
         # 'percent_certainty': 95, 
         # 'is_there_a_link': True, 
         # 'included_link': 'https://grabify.org/27CB2'
+        # 'is_link_malicious': True
 
         #Make Gemini call
         results = is_email_content_malicious(email)
         jsond = json.loads(results)
-
+        
         combined.append(jsond)
-        
-
-        #If is_there_a_link == true, then pass the link to link_detector
-        #if results["is_there_a_link"] == True:
-            #url_result = check_url_status(results["included_link"])
-        
-
     return combined
 
 #Testing
-print(emails_main(3))
+print(emails_main(1))

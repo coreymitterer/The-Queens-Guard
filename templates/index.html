@@ -13,8 +13,17 @@
         <button type="submit">Submit</button>
     </form>
     {% if results %}
-        <h3>Results:</h3>
-        <p>{{ results }}</p>
-    {% endif %}
+    <h3>Email Analysis Results:</h3>
+    <ul>
+        {% for email in results %}
+            <li>
+                <strong>Subject:</strong> {{ email.subject_line }} <br>
+                <strong>Malicious:</strong> {% if email.is_email_malicious %}Yes{% else %}No{% endif %} <br>
+                <strong>Certainty:</strong> {{ email.percent_certainty }}%
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
 </body>
 </html>
