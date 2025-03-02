@@ -24,11 +24,12 @@ def emails_main(num: int):
     combined = '['
     for email in emails:
         #Pass the email body to gemini, returns a dict with:
+        #    subject_line: str
         #    is_email_malicious: bool
         #    percent_certainty: int
         #    is_there_a_link: bool
         #    included_link: str
-        results = is_email_content_malicious(email["email_body"])
+        results = is_email_content_malicious(email)
 
         if combined == "[":
             combined = combined + results
@@ -43,4 +44,4 @@ def emails_main(num: int):
     return combined
 
 #Testing
-#print(emails_main(3))
+print(emails_main(3))
